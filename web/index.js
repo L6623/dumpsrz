@@ -4,6 +4,16 @@ const fs = require('fs').promises;
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const multer = require('multer');
+const { exec } = require('child_process');
+
+exec('which lua || echo "lua no encontrado"', (err, stdout) => {
+  console.log('¿Dónde está lua? →', stdout.trim() || 'No encontrado');
+  console.log('PATH completo →', process.env.PATH);
+});
+
+exec('lua -v || echo "lua falla"', (err, stdout, stderr) => {
+  console.log('Versión lua o error →', stdout.trim(), stderr.trim());
+});
 
 const app = express();
 const port = process.env.PORT || 3000;
