@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prometheus Deobfuscator Online</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { color: #333; }
+    textarea, pre { width: 100%; max-width: 900px; height: 300px; font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .container { max-width: 960px; margin: auto; }
+    .error { color: red; font-weight: bold; }
+    .result { background: #efffef; padding: 15px; border-left: 5px solid #28a745; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Prometheus Deobfuscator V2 Online</h1>
+    <p>Pega tu código Lua ofuscado o sube un .lua (máx 5MB). Procesa con pasos estáticos.</p>
+
+    <form method="POST" action="/deob" enctype="multipart/form-data">
+      <textarea name="code" placeholder="Pega aquí el código ofuscado..."></textarea><br><br>
+      <label> O sube archivo: <input type="file" name="file" accept=".lua,text/plain"></label><br><br>
+      <button type="submit">Deobfuscatear →</button>
+    </form>
+
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } %>
+
+    <% if (result) { %>
+      <div class="result">
+        <h3>Resultado deobfuscateado:</h3>
+        <pre><%= result %></pre>
+      </div>
+      <h4>Código original (recortado):</h4>
+      <pre><%= original || 'No disponible' %></pre>
+    <% } %>
+  </div>
+</body>
+</html>
