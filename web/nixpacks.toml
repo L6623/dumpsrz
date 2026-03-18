@@ -1,11 +1,13 @@
-# nixpacks.toml
+# nixpacks.toml – fuerza instalación de lua5_1 y lo pone en PATH
 [phases.setup]
-nixPkgs = ['lua5_1', 'luarocks']
+nixPkgs = ['nodejs_20', 'lua5_1', 'luarocks']  # nodejs_20 para coincidir con tu engine
+
+[phases.install]
+dependsOn = ['setup']
 
 [phases.build]
-cmds = [
-  'cd web && npm install'
-]
+dependsOn = ['install']
+cmds = ['cd web && npm ci --production']  # o npm install si prefieres
 
 [start]
 cmd = 'node web/index.js'
